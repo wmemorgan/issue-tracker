@@ -21,7 +21,7 @@ mongo.connect(CONNECTION_STRING, function (err, conn) {
 exports.projectCreate = (req, res) => {
   let project = req.body
   var missingFields = requiredFields.filter(field => !project.hasOwnProperty(field))
-  console.log(missingFields)
+  console.log(`Missing fields are: ${missingFields}`)
   if (missingFields.length > 0) {
     res.status(500)
     res.send(`Missing fields: ${missingFields}`)
