@@ -82,30 +82,53 @@ suite('Functional Tests', function() {
       // })
 
       test('No body', function(done) {
-        
+        chai.request(server)
+          .put('/api/issues/test')
+          .send({})
+          .end((err, res) => {
+            assert.equal(res.status, 500)
+            done()
+          })
       });
       
       test('One field to update', function(done) {
-        
+        chai.request(server)
+          .put('/api/issues/test')
+          .send({issue_title: 'Title'})
+          .end((err, res) => {
+            assert.equal(res.status, 200)
+            assert.isAtLeast(Object.keys(res.body).length, 1)
+            done()
+          })
       });
       
       test('Multiple fields to update', function(done) {
-        
+        chai.request(server)
+          .put('/api/issues/test')
+          .send({ 
+            issue_title: 'Title',
+            issue_text: 'text', 
+          })
+          .end((err, res) => {
+            assert.equal(res.status, 200)
+            assert.isAbove(Object.keys(res.body).length, 1)
+            done()
+          })  
       });
       
     });
     
     suite('GET /api/issues/{project} => Array of objects with issue data', function() {
 
-      test('GET: Display project msg', (done) => {
-        chai.request(server)
-          .get('/api/issues/test')
-          .end((err, res) => {
-            assert.equal(res.status, 200)
-            assert.equal(res.body, 'Display project')
-            done()
-          })
-      }) 
+      // test('GET: Display project msg', (done) => {
+      //   chai.request(server)
+      //     .get('/api/issues/test')
+      //     .end((err, res) => {
+      //       assert.equal(res.status, 200)
+      //       assert.equal(res.body, 'Display project')
+      //       done()
+      //     })
+      // }) 
 
       test('No filter', function(done) {
         chai.request(server)
