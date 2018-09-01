@@ -11,31 +11,16 @@
 var expect = require('chai').expect;
 var MongoClient = require('mongodb');
 var ObjectId = require('mongodb').ObjectID;
-
-const CONNECTION_STRING = process.env.DATABASE; //MongoClient.connect(CONNECTION_STRING, function(err, db) {});
+const projectHandler = require('../controllers/projectHandler')
 
 module.exports = function (app) {
 
-  app.route('/api/issues/:project')
-  
-    .get(function (req, res){
-      var project = req.params.project;
-      
-    })
+  app.route('/api/issues/')
+    .get(projectHandler.projectDisplay)
+
+    .post(projectHandler.projectCreate)
     
-    .post(function (req, res){
-      var project = req.params.project;
-      
-    })
+    .put(projectHandler.projectUpdate)
     
-    .put(function (req, res){
-      var project = req.params.project;
-      
-    })
-    
-    .delete(function (req, res){
-      var project = req.params.project;
-      
-    });
-    
+    .delete(projectHandler.projectDelete);
 };
