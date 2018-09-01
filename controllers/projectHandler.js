@@ -14,7 +14,9 @@ mongo.connect(CONNECTION_STRING, function (err, conn) {
 
 // Create project
 exports.projectCreate = (req, res) => {
-  res.json('Create project')
+ let project = req.body
+  console.log(`Project contains: `, project)
+  res.json(project)
 }
 
 // Update project
