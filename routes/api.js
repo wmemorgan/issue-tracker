@@ -15,7 +15,7 @@ const projectHandler = require('../controllers/projectHandler')
 
 module.exports = function (app) {
 
-  app.route('/api/issues/')
+  app.route('/api/issues/:project')
     .get(projectHandler.projectDisplay)
 
     .post(projectHandler.projectCreate)
