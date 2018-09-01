@@ -7,6 +7,16 @@ const requiredFields = [
   'issue_text',
   'created_by'
 ]
+
+const verifyProjectData = (data) => {
+  if (Object.keys(project).length < 1) {
+    console.log('No data')
+    return false
+  } else { 
+    return data
+  }
+}
+
 let db
 
 mongo.connect(CONNECTION_STRING, function (err, conn) {
@@ -34,7 +44,16 @@ exports.projectCreate = (req, res) => {
 
 // Update project
 exports.projectUpdate = (req, res) => {
-  res.json('Update project')
+  let project = req.body
+  console.log(`Object is: `, project)
+  if (Object.keys(project).length < 1) {
+    res.status(500)
+    res.send(`No body`)
+  } else {
+    console.log(`It's a GO sending data your way...`)
+    res.json(project)
+  }
+  
 }
 
 // Display project
