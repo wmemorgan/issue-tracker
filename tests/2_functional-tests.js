@@ -16,33 +16,26 @@ chai.use(chaiHttp);
 suite('Functional Tests', function() {
   
     suite('POST /api/issues/{project} => object with issue data', function() {
-      test('POST: Create project msg', (done) => {
-        chai.request(server)
-          .post('/api/issues/')
-          .end((err, res) => {
-            assert.equal(res.status, 200)
-            assert.equal(res.body, 'Create project')
-            done()
-          })
-      })
-      // test('Every field filled in', function(done) {
-      //  chai.request(server)
-      //   .post('/api/issues/test')
-      //   .send({
-      //     issue_title: 'Title',
-      //     issue_text: 'text',
-      //     created_by: 'Functional Test - Every field filled in',
-      //     assigned_to: 'Chai and Mocha',
-      //     status_text: 'In QA'
-      //   })
-      //   .end(function(err, res){
-      //     assert.equal(res.status, 200);
-          
-      //     //fill me in too!
-          
-      //     done();
-      //   });
-      //});
+      test('Every field filled in', function(done) {
+       chai.request(server)
+        .post('/api/issues/test')
+        .send({
+          issue_title: 'Title',
+          issue_text: 'text',
+          created_by: 'Functional Test - Every field filled in',
+          assigned_to: 'Chai and Mocha',
+          status_text: 'In QA'
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.equal(res.body.issue_title, 'Title')
+          assert.equal(res.body.issue_text, 'text')
+          assert.equal(res.body.created_by, 'Functional Test - Every field filled in')
+          assert.equal(res.body.assigned_to, 'Chai and Mocha')
+          assert.equal(res.body.status_text, 'In QA')
+          done();
+        });
+      });
       
       // test('Required fields filled in', function(done) {
         
@@ -58,7 +51,7 @@ suite('Functional Tests', function() {
 
       test('PUT: Update project msg', (done) => {
         chai.request(server)
-          .put('/api/issues/')
+          .put('/api/issues/test')
           .end((err, res) => {
             assert.equal(res.status, 200)
             assert.equal(res.body, 'Update project')
@@ -83,7 +76,7 @@ suite('Functional Tests', function() {
 
       test('GET: Display project msg', (done) => {
         chai.request(server)
-          .get('/api/issues/')
+          .get('/api/issues/test')
           .end((err, res) => {
             assert.equal(res.status, 200)
             assert.equal(res.body, 'Display project')
@@ -123,7 +116,7 @@ suite('Functional Tests', function() {
     suite('DELETE /api/issues/{project} => text', function() {
       test('DELETE: Delete project msg', (done) => {
         chai.request(server)
-          .delete('/api/issues/')
+          .delete('/api/issues/test')
           .end((err, res) => {
             assert.equal(res.status, 200)
             assert.equal(res.body, 'Delete project')
