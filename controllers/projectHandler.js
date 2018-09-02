@@ -51,7 +51,7 @@ exports.projectCreate = (req, res) => {
           console.log(`Project record has been created:`)
           console.log('x is: ', doc.ops[0])
         }
-        res.json(project)
+        res.json(doc.ops[0])
       })
   }
 
