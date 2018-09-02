@@ -68,13 +68,13 @@ exports.projectCreate = (req, res) => {
 // Update project
 exports.projectUpdate = (req, res) => {
   let project = req.body
-  let id = req.body._id
+  let id = new ObjectId(req.body._id) 
   console.log(`Project data is: `, project)
   delete project._id
   console.log('ID is: ', id)
   if (Object.keys(project).length < 1) {
     res.status(500)
-    res.send(`No body`)
+    res.send(`no updated field sent`)
   } else {
     console.log(`It's a GO sending data your way...`)
     res.json(project)
