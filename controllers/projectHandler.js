@@ -8,6 +8,14 @@ const requiredFields = [
   'created_by'
 ]
 
+const allFields = [
+  'issue_title',
+  'issue_text',
+  'created_by',
+  'assigned_to',
+  'status_text'
+]
+
 const verifyProjectData = (data) => {
   if (Object.keys(project).length < 1) {
     console.log('No data')
@@ -60,7 +68,10 @@ exports.projectCreate = (req, res) => {
 // Update project
 exports.projectUpdate = (req, res) => {
   let project = req.body
-  console.log(`Object is: `, project)
+  let id = req.body._id
+  console.log(`Project data is: `, project)
+  delete project._id
+  console.log('ID is: ', id)
   if (Object.keys(project).length < 1) {
     res.status(500)
     res.send(`No body`)
