@@ -69,15 +69,32 @@ exports.projectCreate = (req, res) => {
 exports.projectUpdate = (req, res) => {
   let project = req.body
   let id = new ObjectId(req.body._id) 
-  console.log(`Project data is: `, project)
   delete project._id
+  let newvalues = { $set: project }
   console.log('ID is: ', id)
+  console.log(`Project data is: `, project)
+  console.log(`New values are: `, newvalues)
   if (Object.keys(project).length < 1) {
     res.status(500)
     res.send(`no updated field sent`)
   } else {
     console.log(`It's a GO sending data your way...`)
-    res.json(project)
+    db.findOne({ '_id': id }, (err, issue) => {
+      if (err) throw err
+      if (issue === null) {
+        res.status(500)
+        res.send('No project on file')
+      }
+      else {
+        console.log('Record avaiable: ', issue)
+        db.updateOne({ '_id': id }, newvalues, (err, results) => {
+          if (err) throw err
+          console.log(`Updated project info: `, results.result)
+          res.send(results.result)
+        })
+      }
+    })
+    // res.json(project)
   }
   
 }
