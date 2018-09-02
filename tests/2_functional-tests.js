@@ -10,6 +10,8 @@ var chaiHttp = require('chai-http');
 var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
+// var PROJECT_ID = '5b8bdeebc5102b731c949ebf'
+const PROJECT_ID = '5b8bdeecc5102b731c949ec0'
 
 chai.use(chaiHttp);
 
@@ -95,8 +97,8 @@ suite('Functional Tests', function() {
         chai.request(server)
           .put('/api/issues/test')
           .send({
-            _id: '5b8bd259ac313a696922ea15',
-            issue_title: 'Title'
+            _id: PROJECT_ID,
+            issue_text: 'No internet!'
           })
           .end((err, res) => {
             assert.equal(res.status, 200)
@@ -109,9 +111,9 @@ suite('Functional Tests', function() {
         chai.request(server)
           .put('/api/issues/test')
           .send({
-            _id: '5b8bd259ac313a696922ea15', 
-            issue_title: 'Title',
-            issue_text: 'text', 
+            _id: PROJECT_ID, 
+            issue_text: 'Internet is still down!!!!',
+            assigned_to: 'George Kaplan' 
           })
           .end((err, res) => {
             assert.equal(res.status, 200)
