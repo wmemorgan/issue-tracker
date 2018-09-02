@@ -94,7 +94,10 @@ suite('Functional Tests', function() {
       test('One field to update', function(done) {
         chai.request(server)
           .put('/api/issues/test')
-          .send({issue_title: 'Title'})
+          .send({
+            _id: '5b8bd259ac313a696922ea15',
+            issue_title: 'Title'
+          })
           .end((err, res) => {
             assert.equal(res.status, 200)
             assert.isAtLeast(Object.keys(res.body).length, 1)
@@ -105,7 +108,8 @@ suite('Functional Tests', function() {
       test('Multiple fields to update', function(done) {
         chai.request(server)
           .put('/api/issues/test')
-          .send({ 
+          .send({
+            _id: '5b8bd259ac313a696922ea15', 
             issue_title: 'Title',
             issue_text: 'text', 
           })
