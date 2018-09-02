@@ -48,7 +48,8 @@ exports.projectCreate = (req, res) => {
       (err, doc) => {
         if (err) throw err
         else {
-          console.log(`Project record has been created: `, doc)
+          console.log(`Project record has been created:`)
+          console.log('x is: ', doc.ops[0])
         }
         res.json(project)
       })
