@@ -65,7 +65,7 @@ suite('Functional Tests', function() {
             status_text: 'In QA'
           })
           .end((err, res) => {
-            assert.equal(res.status, 500)
+            assert.equal(res.status, 400)
             done()
           })
       });
@@ -89,7 +89,7 @@ suite('Functional Tests', function() {
           .put('/api/issues/test')
           .send({})
           .end((err, res) => {
-            assert.equal(res.status, 500)
+            assert.equal(res.status, 400)
             done()
           })
       });
@@ -202,7 +202,7 @@ suite('Functional Tests', function() {
         chai.request(server)
         .delete('/api/issues/test')
         .end((err, res) => {
-          assert.equal(res.status, 500)
+          assert.equal(res.status, 400)
           done()
         })
       })

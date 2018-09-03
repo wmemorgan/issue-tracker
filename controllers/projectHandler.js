@@ -41,7 +41,7 @@ exports.projectCreate = (req, res) => {
   var missingFields = requiredFields.filter(field => !project.hasOwnProperty(field))
   // console.log(`Missing fields are: ${missingFields}`)
   if (missingFields.length > 0) {
-    res.status(500).send(`Missing fields: ${missingFields}`)
+    res.status(400).send(`Missing fields: ${missingFields}`)
   } else {
     // console.log(`Project contains: `, project)
     db.insertOne(
@@ -58,7 +58,7 @@ exports.projectCreate = (req, res) => {
       (err, doc) => {
         if (err) {
           console.error(err)
-          res.status(501).send(err)
+          res.status(500).send(err)
         }
         else {
           // console.log(`Project record has been created:`, doc.ops[0])
@@ -81,13 +81,13 @@ exports.projectUpdate = (req, res) => {
     }
   })
   console.log(`Newly formed project file: `, project)
+  console.log(`req.body._id: `, req.body._id)
   let id = new ObjectId(req.body._id) 
   delete project._id
-  // console.log('ID is: ', id)
+  console.log('ID is: ', id)
   // console.log(`Project data is: `, project)
-  // console.log(`New values are: `, newvalues)
   if (Object.keys(project).length <= 0) {
-    res.status(500)
+    res.status(400)
     res.send(`no updated field sent`)
   } else {
     // console.log(`It's a GO sending data your way...`)
@@ -95,9 +95,10 @@ exports.projectUpdate = (req, res) => {
       if (err) {
         console.log(`Something's not right....`)
         console.error(err)
+        res.status(400).send(`Something's not right....`)
       }
       else if (issue === null) {
-        res.status(500).send('No project on file')
+        res.status(400).send('No project on file')
       }
       else {
         // console.log('Record avaiable: ', issue)
@@ -140,19 +141,24 @@ exports.projectDisplay = (req, res) => {
 // Delete project
 exports.projectDelete = (req, res) => {
   // db.remove()
-  let id = new ObjectId(req.query._id) 
-  console.log(`Lookup project ID: `, id)
-  db.findOne({ '_id': id }, (err, issue) => {
-    if (err) {
-      console.log(`Something's not right....`)
-      console.error(err)
-    }
-    else if (issue === null) {
-      res.status(500).send('No project on file')
-    } else {
-      res.status(200).json('Valid project id')
-    }
-  })
+  if(!req.query._id) {
+    res.status(400).send('_id error')
+  } else {
+    let id = new ObjectId(req.query._id)
+    console.log(`Lookup project ID: `, id)
+    db.findOne({ '_id': id }, (err, issue) => {
+      if (err) {
+        console.log(`Something's not right....`)
+        console.error(err)
+        res.status(400).send(`Something's not right....`)
+      }
+      else if (issue === null) {
+        res.status(400).send('No project on file')
+      } else {
+        res.status(200).json(`deleted ${id}`)
+      }
+    })
+  }
 }
 
 
