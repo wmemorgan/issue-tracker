@@ -16,6 +16,7 @@
 ### Example Usage:
 
 ```/api/issues/{project}```
+
 ```/api/issues/{project}?open=true&assigned_to=George```
 
 ### Example Usage:
