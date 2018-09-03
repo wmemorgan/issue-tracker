@@ -131,7 +131,18 @@ exports.projectDisplay = (req, res) => {
 // Delete project
 exports.projectDelete = (req, res) => {
   // db.remove()
-  res.json('Delete project')
+  let { _id } = req.query
+  db.findOne({ '_id': _id }, (err, issue) => {
+    if (err) {
+      console.log(`Something's not right....`)
+      console.error(err)
+    }
+    else if (issue === null) {
+      res.status(500).send('No project on file')
+    } else {
+      res.json('Valid project id')
+    }
+  })
 }
 
 
