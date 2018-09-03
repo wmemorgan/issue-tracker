@@ -98,7 +98,7 @@ exports.projectUpdate = (req, res) => {
             res.status(501).send(`could not update ${id}`)
           }
           else {
-            console.log(`successfully updated `, results.result)
+            console.log(`successfully updated `)
             res.send('successfully updated')
           }
 
@@ -114,16 +114,16 @@ exports.projectUpdate = (req, res) => {
 exports.projectDisplay = (req, res) => {
   console.log(`Incoming request options: `, req.query)
   let { query } = req
-  // db.find(query).toArray((err, result) => {
-  //   if (err) {
-  //     console.error(err)
-  //     res.status(500).res.send('no record available')
-  //   } else {
-  //     console.log(`Sending results: `, result)
-  //     res.status(200).res.send(result)
-  //   }
-  // })
-  res.json('Display project')
+  db.find(query).toArray((err, result) => {
+    if (err) {
+      console.error(err)
+      res.status(500).res.send('no record available')
+    } else {
+      console.log(`Sending results: `)
+      res.send(result)
+    }
+  })
+  // res.json('Display project')
 }
 
 // Delete project
