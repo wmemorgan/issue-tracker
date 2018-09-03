@@ -110,6 +110,17 @@ exports.projectUpdate = (req, res) => {
 
 // Display project
 exports.projectDisplay = (req, res) => {
+  console.log(`Incoming request options: `, req.query)
+  let { query } = req
+  db.find(query).toArray((err, result) => {
+    if (err) {
+      console.error(err)
+      res.status(500).res.send('no record available')
+    } else {
+      console.log(`Sending results: `, result)
+      res.status(200).res.send(result)
+    }
+  })
   res.json('Display project')
 }
 
