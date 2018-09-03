@@ -115,6 +115,7 @@ exports.projectDisplay = (req, res) => {
 
 // Delete project
 exports.projectDelete = (req, res) => {
+  // db.remove()
   res.json('Delete project')
 }
 
