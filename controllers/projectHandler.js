@@ -73,9 +73,9 @@ exports.projectCreate = (req, res) => {
 exports.projectUpdate = (req, res) => {
   //UTILITY PROGRAM: to clean up database
   // db.remove()
-
+  let body = Object.keys(req.body).length > 0 ? req.body : {}
+  console.log(`Deconstructed 'body' is: `, body)
   //Convert "true/false" string to boolean type
-  let { body } = req
   if (body.open == "true" || body.open == "false") {
     body.open = (body.open == "true")
     console.log(`body.open type is: `, typeof body.open, body.open)
