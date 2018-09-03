@@ -210,12 +210,14 @@ suite('Functional Tests', function() {
       })
       
       test('Valid _id', function(done) {
-        // chai.request(server)
-        // .delete('/api/issues/test')
-        // .end((err, res) => {
-        //   assert.equal(res.status, 200)
-        //   done()
-        // })
+        chai.request(server)
+        .delete('/api/issues/test')
+        .query({_id: PROJECT_ID})
+        .end((err, res) => {
+          console.log(res.body)
+          assert.equal(res.status, 200)
+          done()
+        })
       })
     });
 
