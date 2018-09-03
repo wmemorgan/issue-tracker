@@ -73,10 +73,16 @@ exports.projectCreate = (req, res) => {
 exports.projectUpdate = (req, res) => {
   //UTILITY PROGRAM: to clean up database
   // db.remove()
-  let project = req.body
+  // let project = req.body
+  let project = {}
+  Object.keys(req.body).forEach((key) => {
+    if (req.body[key] !== "") {
+      project[key] = req.body[key]
+    }
+  })
+  console.log(`Newly formed project file: `, project)
   let id = new ObjectId(req.body._id) 
   delete project._id
-  let newvalues = { $set: project }
   // console.log('ID is: ', id)
   // console.log(`Project data is: `, project)
   // console.log(`New values are: `, newvalues)
@@ -95,6 +101,9 @@ exports.projectUpdate = (req, res) => {
       }
       else {
         // console.log('Record avaiable: ', issue)
+        project.updated_on = new Date()
+        let newvalues = { $set: project }
+        console.log(`New values are: `, newvalues)
         db.updateOne({ '_id': id }, newvalues, (err, results) => {
           if (err) {
             console.error(err)
