@@ -39,19 +39,20 @@ mongo.connect(CONNECTION_STRING, function (err, conn) {
 exports.projectCreate = (req, res) => {
   let project = req.body
   var missingFields = requiredFields.filter(field => !project.hasOwnProperty(field))
-  console.log(`Missing fields are: ${missingFields}`)
+  // console.log(`Missing fields are: ${missingFields}`)
   if (missingFields.length > 0) {
     res.status(500).send(`Missing fields: ${missingFields}`)
   } else {
-    console.log(`Project contains: `, project)
+    // console.log(`Project contains: `, project)
     db.insertOne(
       {
         issue_title: req.body.issue_title,
         issue_text: req.body.issue_text,
         created_by: req.body.created_by,
         created_on: new Date(),
+        updated_on: null,
         assigned_to: req.body.assigned_to,
-        open: req.body.open,
+        open: true,
         status_text: req.body.status_text
       },
       (err, doc) => {
@@ -60,7 +61,7 @@ exports.projectCreate = (req, res) => {
           res.status(501).send(err)
         }
         else {
-          console.log(`Project record has been created:`, doc.ops[0])
+          // console.log(`Project record has been created:`, doc.ops[0])
           res.json(doc.ops[0])
         }
       })
@@ -70,18 +71,20 @@ exports.projectCreate = (req, res) => {
 
 // Update project
 exports.projectUpdate = (req, res) => {
+  //UTILITY PROGRAM: to clean up database
+  // db.remove()
   let project = req.body
   let id = new ObjectId(req.body._id) 
   delete project._id
   let newvalues = { $set: project }
-  console.log('ID is: ', id)
-  console.log(`Project data is: `, project)
-  console.log(`New values are: `, newvalues)
+  // console.log('ID is: ', id)
+  // console.log(`Project data is: `, project)
+  // console.log(`New values are: `, newvalues)
   if (Object.keys(project).length <= 0) {
     res.status(500)
     res.send(`no updated field sent`)
   } else {
-    console.log(`It's a GO sending data your way...`)
+    // console.log(`It's a GO sending data your way...`)
     db.findOne({ '_id': id }, (err, issue) => {
       if (err) {
         console.log(`Something's not right....`)
@@ -91,7 +94,7 @@ exports.projectUpdate = (req, res) => {
         res.status(500).send('No project on file')
       }
       else {
-        console.log('Record avaiable: ', issue)
+        // console.log('Record avaiable: ', issue)
         db.updateOne({ '_id': id }, newvalues, (err, results) => {
           if (err) {
             console.error(err)
