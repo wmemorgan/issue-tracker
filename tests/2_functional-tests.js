@@ -99,8 +99,7 @@ suite('Functional Tests', function() {
           .put('/api/issues/test')
           .send({
             _id: PROJECT_ID,
-            assigned_to: 'R2D2',
-            updated_on: new Date() 
+            assigned_to: 'R2D2'
           })
           .end((err, res) => {
             assert.equal(res.status, 200)
@@ -116,8 +115,7 @@ suite('Functional Tests', function() {
             _id: PROJECT_ID,
             issue_title: 'Internet down', 
             status_text: `Fixed the problem. Outage caused by telco`,
-            open: false,
-            updated_on: new Date() 
+            open: false
           })
           .end((err, res) => {
             assert.equal(res.status, 200)
