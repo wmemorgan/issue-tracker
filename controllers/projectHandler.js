@@ -50,6 +50,7 @@ exports.projectCreate = (req, res) => {
         issue_title: req.body.issue_title,
         issue_text: req.body.issue_text,
         created_by: req.body.created_by,
+        created_on: new Date(),
         assigned_to: req.body.assigned_to,
         status_text: req.body.status_text
       },
@@ -74,23 +75,31 @@ exports.projectUpdate = (req, res) => {
   console.log('ID is: ', id)
   console.log(`Project data is: `, project)
   console.log(`New values are: `, newvalues)
-  if (Object.keys(project).length < 1) {
+  if (Object.keys(project).length <= 0) {
     res.status(500)
     res.send(`no updated field sent`)
   } else {
     console.log(`It's a GO sending data your way...`)
     db.findOne({ '_id': id }, (err, issue) => {
-      if (err) throw err
-      if (issue === null) {
-        res.status(500)
-        res.send('No project on file')
+      if (err) {
+        console.log(`Something's not right....`)
+        console.error(err)
+      }
+      else if (issue === null) {
+        res.status(500).send('No project on file')
       }
       else {
         console.log('Record avaiable: ', issue)
         db.updateOne({ '_id': id }, newvalues, (err, results) => {
-          if (err) throw err
-          console.log(`Updated project info: `, results.result)
-          res.send(results.result)
+          if (err) {
+            console.error(err)
+            res.status(501).send(`could not update ${id}`)
+          }
+          else {
+            console.log(`successfully updated `, results)
+            res.status(200).send('successfully updated')
+          }
+
         })
       }
     })
