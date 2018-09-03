@@ -11,7 +11,7 @@ var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
 
-const PROJECT_ID = '5b8ce276b2cd052d4b513769'
+const PROJECT_ID = '5b8cf1bd420eb93ac6825c5c'
 
 chai.use(chaiHttp);
 
@@ -26,7 +26,6 @@ suite('Functional Tests', function() {
           issue_text: 'text',
           created_by: 'Functional Test - Every field filled in',
           assigned_to: 'Chai and Mocha',
-          open: true,
           status_text: 'In QA'
         })
         .end((err, res) => {
@@ -143,8 +142,9 @@ suite('Functional Tests', function() {
       test('No filter', function(done) {
         chai.request(server)
         .get('/api/issues/test')
-          .query({issue_title: 'Title'})
+        .query({})
         .end(function(err, res){
+          console.log(`Response records are:`, res.body[0])
           assert.equal(res.status, 200);
           assert.isArray(res.body);
           assert.property(res.body[0], 'issue_title');
@@ -161,7 +161,14 @@ suite('Functional Tests', function() {
       });
       
       test('One filter', function(done) {
-        
+        chai.request(server)
+        .get('/api/issues/test')
+        .query({ issue_title: 'Title' })
+        .end((er, res) => {
+          assert.equal(res.status, 200)
+          assert.equal(res.body[0].issue_title, 'Title');
+          done()
+        })
       });
       
       test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
