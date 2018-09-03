@@ -73,16 +73,23 @@ exports.projectCreate = (req, res) => {
 exports.projectUpdate = (req, res) => {
   //UTILITY PROGRAM: to clean up database
   // db.remove()
-  // let project = req.body
+
+  //Convert "true/false" string to boolean type
+  let { body } = req
+  if (body.open == "true" || body.open == "false") {
+    body.open = (body.open == "true")
+    console.log(`body.open type is: `, typeof body.open, body.open)
+  }
+
   let project = {}
-  Object.keys(req.body).forEach((key) => {
-    if (req.body[key] !== "") {
-      project[key] = req.body[key]
+  Object.keys(body).forEach((key) => {
+    if (body[key] !== "") {
+      project[key] = body[key]
     }
   })
   console.log(`Newly formed project file: `, project)
-  console.log(`req.body._id: `, req.body._id)
-  let id = new ObjectId(req.body._id) 
+  console.log(`body._id: `, body._id)
+  let id = new ObjectId(body._id) 
   delete project._id
   console.log('ID is: ', id)
   // console.log(`Project data is: `, project)
@@ -127,6 +134,12 @@ exports.projectUpdate = (req, res) => {
 exports.projectDisplay = (req, res) => {
   console.log(`Incoming request options: `, req.query)
   let { query } = req
+
+  //Convert "true/false" string to boolean type
+  if (query.open == "true" || query.open == "false") {
+    query.open = (query.open == "true")
+    console.log(`query.open type is: `, typeof query.open, query.open)
+  }
   db.find(query).toArray((err, result) => {
     if (err) {
       console.error(err)
