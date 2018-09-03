@@ -11,7 +11,7 @@ var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
 
-const PROJECT_ID = '5b8cc7cd0c6f581a1586a142'
+const PROJECT_ID = '5b8ce276b2cd052d4b513769'
 
 chai.use(chaiHttp);
 
@@ -35,7 +35,7 @@ suite('Functional Tests', function() {
           assert.equal(res.body.issue_text, 'text')
           assert.equal(res.body.created_by, 'Functional Test - Every field filled in')
           assert.equal(res.body.assigned_to, 'Chai and Mocha')
-          assert.equal(res.body.open, true)
+          assert.equal(res.body.open, true),
           assert.equal(res.body.status_text, 'In QA')
           done();
         });
