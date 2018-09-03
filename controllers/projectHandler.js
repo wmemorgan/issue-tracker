@@ -41,8 +41,7 @@ exports.projectCreate = (req, res) => {
   var missingFields = requiredFields.filter(field => !project.hasOwnProperty(field))
   console.log(`Missing fields are: ${missingFields}`)
   if (missingFields.length > 0) {
-    res.status(500)
-    res.send(`Missing fields: ${missingFields}`)
+    res.status(500).send(`Missing fields: ${missingFields}`)
   } else {
     console.log(`Project contains: `, project)
     db.insertOne(
@@ -52,15 +51,18 @@ exports.projectCreate = (req, res) => {
         created_by: req.body.created_by,
         created_on: new Date(),
         assigned_to: req.body.assigned_to,
+        open: req.body.open,
         status_text: req.body.status_text
       },
       (err, doc) => {
-        if (err) throw err
-        else {
-          console.log(`Project record has been created:`)
-          console.log('x is: ', doc.ops[0])
+        if (err) {
+          console.error(err)
+          res.status(501).send(err)
         }
-        res.json(doc.ops[0])
+        else {
+          console.log(`Project record has been created:`, doc.ops[0])
+          res.json(doc.ops[0])
+        }
       })
   }
 
@@ -96,8 +98,8 @@ exports.projectUpdate = (req, res) => {
             res.status(501).send(`could not update ${id}`)
           }
           else {
-            console.log(`successfully updated `, results)
-            res.status(200).send('successfully updated')
+            console.log(`successfully updated `, results.result)
+            res.send('successfully updated')
           }
 
         })
@@ -112,15 +114,15 @@ exports.projectUpdate = (req, res) => {
 exports.projectDisplay = (req, res) => {
   console.log(`Incoming request options: `, req.query)
   let { query } = req
-  db.find(query).toArray((err, result) => {
-    if (err) {
-      console.error(err)
-      res.status(500).res.send('no record available')
-    } else {
-      console.log(`Sending results: `, result)
-      res.status(200).res.send(result)
-    }
-  })
+  // db.find(query).toArray((err, result) => {
+  //   if (err) {
+  //     console.error(err)
+  //     res.status(500).res.send('no record available')
+  //   } else {
+  //     console.log(`Sending results: `, result)
+  //     res.status(200).res.send(result)
+  //   }
+  // })
   res.json('Display project')
 }
 
