@@ -113,7 +113,8 @@ suite('Functional Tests', function() {
         chai.request(server)
           .put('/api/issues/test')
           .send({
-            _id: PROJECT_ID, 
+            _id: PROJECT_ID,
+            issue_title: 'Internet down', 
             status_text: `Fixed the problem. Outage caused by telco`,
             open: false,
             updated_on: new Date() 
@@ -144,7 +145,6 @@ suite('Functional Tests', function() {
         .get('/api/issues/test')
         .query({})
         .end(function(err, res){
-          console.log(`Response records are:`, res.body[0])
           assert.equal(res.status, 200);
           assert.isArray(res.body);
           assert.property(res.body[0], 'issue_title');
@@ -172,6 +172,17 @@ suite('Functional Tests', function() {
       });
       
       test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
+        chai.request(server)
+        .get('/api/issues/test')
+        .query({ 
+          assigned_to: 'R2D2',
+          issue_title: 'Internet down'
+        })
+        .end((err, res) => {
+          console.log(`Response records for multi-filters are:`, res.body)
+          assert.equal(res.status, 200)
+          done()
+        })
         
       });
       

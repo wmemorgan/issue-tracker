@@ -122,7 +122,6 @@ exports.projectDisplay = (req, res) => {
       console.error(err)
       res.status(500).res.send('no record available')
     } else {
-      console.log(`Sending results: `)
       res.send(result)
     }
   })
