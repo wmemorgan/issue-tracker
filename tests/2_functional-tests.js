@@ -11,8 +11,7 @@ var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
 
-// var PROJECT_ID = '5b8bdeebc5102b731c949ebf'
-const PROJECT_ID = '5b8be5c08ba27f79d04f1140'
+const PROJECT_ID = '5b8cc4217d3aa916cd2d7edd'
 
 chai.use(chaiHttp);
 
@@ -27,6 +26,7 @@ suite('Functional Tests', function() {
           issue_text: 'text',
           created_by: 'Functional Test - Every field filled in',
           assigned_to: 'Chai and Mocha',
+          open: true,
           status_text: 'In QA'
         })
         .end((err, res) => {
@@ -35,6 +35,7 @@ suite('Functional Tests', function() {
           assert.equal(res.body.issue_text, 'text')
           assert.equal(res.body.created_by, 'Functional Test - Every field filled in')
           assert.equal(res.body.assigned_to, 'Chai and Mocha')
+          assert.equal(res.body.open, true)
           assert.equal(res.body.status_text, 'In QA')
           done();
         });
@@ -99,7 +100,7 @@ suite('Functional Tests', function() {
           .put('/api/issues/test')
           .send({
             _id: PROJECT_ID,
-            issue_text: 'No internet!',
+            assigned_to: 'R2D2',
             updated_on: new Date() 
           })
           .end((err, res) => {
@@ -114,8 +115,8 @@ suite('Functional Tests', function() {
           .put('/api/issues/test')
           .send({
             _id: PROJECT_ID, 
-            issue_text: 'Internet is still down!!!!',
-            assigned_to: 'George Kaplan',
+            status_text: `Fixed the problem. Outage caused by telco`,
+            open: false,
             updated_on: new Date() 
           })
           .end((err, res) => {
@@ -142,7 +143,7 @@ suite('Functional Tests', function() {
       test('No filter', function(done) {
         chai.request(server)
         .get('/api/issues/test')
-        .query({})
+          .query({})
         .end(function(err, res){
           assert.equal(res.status, 200);
           assert.isArray(res.body);
