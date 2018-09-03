@@ -11,7 +11,7 @@ var chai = require('chai');
 var assert = chai.assert;
 var server = require('../server');
 
-const PROJECT_ID = '5b8cc4217d3aa916cd2d7edd'
+const PROJECT_ID = '5b8cc7cd0c6f581a1586a142'
 
 chai.use(chaiHttp);
 
@@ -143,7 +143,7 @@ suite('Functional Tests', function() {
       test('No filter', function(done) {
         chai.request(server)
         .get('/api/issues/test')
-          .query({})
+          .query({issue_title: 'Title'})
         .end(function(err, res){
           assert.equal(res.status, 200);
           assert.isArray(res.body);
