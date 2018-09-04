@@ -27,10 +27,10 @@ const verifyProjectData = (data) => {
 
 let db
 
-mongo.connect(CONNECTION_STRING, function (err, conn) {
+mongo.connect(CONNECTION_STRING, async (err, conn) => {
   if (err) throw err
   else { 
-    db = conn.collection('issues')
+    db = await conn.collection('issues')
     console.log(`Connected to db ${db} at ${CONNECTION_STRING}`)
   }
 })
