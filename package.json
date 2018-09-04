@@ -1,6 +1,6 @@
 {
 	"name": "my-hyperdev-app",
-	"version": "0.9.0",
+	"version": "1.0.0",
 	"description": "What am I about?",
 	"main": "server.js",
 	"scripts": {
