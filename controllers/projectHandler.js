@@ -105,7 +105,7 @@ exports.projectUpdate = (req, res) => {
         res.status(400).send(`Something's not right....`)
       }
       else if (issue === null) {
-        res.status(400).send('No project on file')
+        res.send('No project on file')
       }
       else {
         // console.log('Record avaiable: ', issue)

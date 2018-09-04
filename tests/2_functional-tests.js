@@ -65,7 +65,9 @@ suite('Functional Tests', function() {
             status_text: 'In QA'
           })
           .end((err, res) => {
+            console.log(`res.text`, res.text)
             assert.equal(res.status, 400)
+            assert.equal(res.text, 'Missing fields: issue_title,issue_text,created_by')
             done()
           })
       });
@@ -89,7 +91,9 @@ suite('Functional Tests', function() {
           .put('/api/issues/test')
           .send({})
           .end((err, res) => {
+            console.log(`res.text: `, res.text)
             assert.equal(res.status, 400)
+            assert.equal(res.text, 'no updated field sent')
             done()
           })
       });
@@ -103,6 +107,7 @@ suite('Functional Tests', function() {
           })
           .end((err, res) => {
             assert.equal(res.status, 200)
+            assert.equal(res.text, 'successfully updated')
             // assert.isAtLeast(Object.keys(res.body).length, 1)
             done()
           })
@@ -119,6 +124,7 @@ suite('Functional Tests', function() {
           })
           .end((err, res) => {
             assert.equal(res.status, 200)
+            assert.equal(res.text, 'successfully updated')
             // assert.isAbove(Object.keys(res.body).length, 1)
             done()
           })  
@@ -164,7 +170,7 @@ suite('Functional Tests', function() {
         .query({ issue_title: 'Title' })
         .end((er, res) => {
           assert.equal(res.status, 200)
-          assert.equal(res.body[0].issue_title, 'Title');
+          assert.equal(res.body[0].issue_title, 'Title')
           done()
         })
       });
@@ -179,6 +185,8 @@ suite('Functional Tests', function() {
         .end((err, res) => {
           // console.log(`Response records for multi-filters are:`, res.body)
           assert.equal(res.status, 200)
+          assert.equal(res.body[0].assigned_to, 'R2D2')
+          assert.equal(res.body[0].issue_title, 'Internet down')
           done()
         })
         
