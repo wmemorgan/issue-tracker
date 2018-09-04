@@ -168,7 +168,16 @@ exports.projectDelete = (req, res) => {
       else if (issue === null) {
         res.status(400).send('No project on file')
       } else {
-        res.status(200).json(`deleted ${id}`)
+        db.deleteOne({_id: id}, (err, doc) => {
+          if (err) {
+            console.error(err)
+            res.send(`could not delete ${id}`)
+          }
+          else {
+            console.log(`deleted ${id}`)
+            res.send(`deleted ${id}`)
+          }
+        })
       }
     })
   }
