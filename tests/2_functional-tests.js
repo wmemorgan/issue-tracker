@@ -75,17 +75,6 @@ suite('Functional Tests', function() {
     });
     
     suite('PUT /api/issues/{project} => text', function() {
-
-      // test('PUT: Update project msg', (done) => {
-      //   chai.request(server)
-      //     .put('/api/issues/test')
-      //     .end((err, res) => {
-      //       assert.equal(res.status, 200)
-      //       assert.equal(res.body, 'Update project')
-      //       done()
-      //     })
-      // })
-
       test('No body', function(done) {
         chai.request(server)
           .put('/api/issues/test')
@@ -108,7 +97,6 @@ suite('Functional Tests', function() {
           .end((err, res) => {
             assert.equal(res.status, 200)
             assert.equal(res.text, 'successfully updated')
-            // assert.isAtLeast(Object.keys(res.body).length, 1)
             done()
           })
       });
@@ -125,7 +113,6 @@ suite('Functional Tests', function() {
           .end((err, res) => {
             assert.equal(res.status, 200)
             assert.equal(res.text, 'successfully updated')
-            // assert.isAbove(Object.keys(res.body).length, 1)
             done()
           })  
       });
@@ -133,17 +120,6 @@ suite('Functional Tests', function() {
     });
     
     suite('GET /api/issues/{project} => Array of objects with issue data', function() {
-
-      // test('GET: Display project msg', (done) => {
-      //   chai.request(server)
-      //     .get('/api/issues/test')
-      //     .end((err, res) => {
-      //       assert.equal(res.status, 200)
-      //       assert.equal(res.body, 'Display project')
-      //       done()
-      //     })
-      // }) 
-
       test('No filter', function(done) {
         chai.request(server)
         .get('/api/issues/test')
@@ -183,7 +159,6 @@ suite('Functional Tests', function() {
           issue_title: 'Internet down'
         })
         .end((err, res) => {
-          // console.log(`Response records for multi-filters are:`, res.body)
           assert.equal(res.status, 200)
           assert.equal(res.body[0].assigned_to, 'R2D2')
           assert.equal(res.body[0].issue_title, 'Internet down')
@@ -195,17 +170,6 @@ suite('Functional Tests', function() {
     });
     
     suite('DELETE /api/issues/{project} => text', function() {
-      // test('DELETE: Delete project msg', (done) => {
-      //   chai.request(server)
-      //     .delete('/api/issues/test')
-      //     .end((err, res) => {
-      //       console.log(`Delete attempt response: `, res.body)
-      //       assert.equal(res.status, 200)
-      //       assert.equal(res.body, 'Delete project')
-      //       done()
-      //     })
-      // })
-
       test('No _id', function(done) {
         chai.request(server)
         .delete('/api/issues/test')
