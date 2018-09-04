@@ -222,6 +222,7 @@ suite('Functional Tests', function() {
       //   .end((err, res) => {
       //     console.log(res.body)
       //     assert.equal(res.status, 200)
+      //     assert.equal(res.text, `deleted ${PROJECT_ID}`)
       //     done()
       //   })
       // })
