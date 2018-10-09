@@ -1,5 +1,7 @@
 # Help Desk Issue Tracker
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/wmemorgan/issue-tracker.svg)](https://greenkeeper.io/)
+
 
 ## User Stories
 
